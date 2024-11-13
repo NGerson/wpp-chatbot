@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoramento em Tempo Real</title>
+</head>
+<body>
+    <h1>Monitoramento de Mensagens em Tempo Real</h1>
+    <div id="log-container"></div>
+
+    <script>
+        // Conecta ao WebSocket do servidor
+        const ws = new WebSocket('ws://localhost:3000');
+
+        // Recebe mensagens em tempo real do servidor
+        ws.onmessage = (event) => {
+            const logContainer = document.getElementById('log-container');
+            const data = JSON.parse(event.data);
+
+            // Cria um novo elemento de log e adiciona ao contêiner
+            const logEntry = document.createElement('p');
+            logEntry.textContent = `Mensagem: ${data.message} | Destinatário: ${data.recipient} | Hora: ${data.timestamp}`;
+            logContainer.appendChild(logEntry);
+        };
+    </script>
+</body>
+</html>
